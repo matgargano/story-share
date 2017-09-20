@@ -207,5 +207,5 @@ Added via setting to Twitter share
 Integrated QUnit tests into grunt task
 Remove `title` from `facebook-complex` share type  since it is not an actual field in the API
 
-
-
+* 0.1.3
+update to latest version which handles window size for google plus, full code formatting cleanup
