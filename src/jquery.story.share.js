@@ -4,7 +4,7 @@
  * Sharing plugin for Story Worldwide
  * Original author: @matgargano
  * Licensed under the MIT license
- * Version 0.1.2
+ * Version 0.1.3
  */
 
 ;(function($, window, document, undefined) {
