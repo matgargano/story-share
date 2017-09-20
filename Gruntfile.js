@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         qunit: {
             all: {
                 options: {
-                    urls: ['http://localhost:8001/tests/']
+                    urls: ['http://localhost:8099/tests/']
                 }
             }
         },
@@ -58,14 +58,14 @@ module.exports = function(grunt) {
             },
             test: {
                 options: {
-                  port: 8001,
+                  port: 8099,
                   base: '.',
                   hostname: 'localhost'
                 }
             },
             open: {
                 options: {
-                    open: 'http://localhost:8000/tests/',
+                    open: 'http://localhost:8099/tests/',
                     directory: 'tests',
                     keepalive: true
                 }
