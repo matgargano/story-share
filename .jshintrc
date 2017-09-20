@@ -1,0 +1,13 @@
+{
+  "curly"     :  true,
+  "latedef"   :  true,
+  "undef"     :  true,
+  "eqnull"    :  true,
+  "eqeqeq"    :  true,
+  "jquery"    :  true,
+  "node"      : true,
+  "browser"   : true,
+  "globals"   : {
+    "console"   : false
+  }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>jQuery StoryShare Tests</title>
+    <link rel="stylesheet" href="/bower_components/qunit/qunit/qunit.css">
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/qunit/qunit/qunit.js"></script>
+    <script src="/src/jquery.story.share.js"></script>
+    <script>
+        // Polyfill for .bind(), which is unsupported in PhantomJS
+        // https://github.com/ariya/phantomjs/issues/10522
+        var isFunction = function(o) {
+            return typeof o == 'function';
+        };
+
+        var bind,
+            slice = [].slice,
+            proto = Function.prototype,
+            featureMap;
+
+        featureMap = {
+            'function-bind': 'bind'
+        };
+
+        function has(feature) {
+            var prop = featureMap[feature];
+            return isFunction(proto[prop]);
+        }
+
+        // check for missing features
+        if (!has('function-bind')) {
+            // adapted from Mozilla Developer Network example at
+            // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+            bind = function bind(obj) {
+                var args = slice.call(arguments, 1),
+                    self = this,
+                    nop = function() {
+                    },
+                    bound = function() {
+                    return self.apply(this instanceof nop ? this : (obj || {}), args.concat(slice.call(arguments)));
+                    };
+                nop.prototype = this.prototype || {}; // Firefox cries sometimes if prototype is undefined
+                bound.prototype = new nop();
+                return bound;
+            };
+          proto.bind = bind;
+        }
+    </script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+
+    <script>
+    /**
+    * Creates an achor element, instantiates the storyShare plugin and returns the Plugin object
+    * @param {Object} attributes An object of attributes (data-* and otherwise) to be added to the element
+    * @param {Object} options Optional storyShare options; `debug` is always true
+    * @returns {Object} The Plugin object
+    */
+    var returnPluginObject = function(attributes, options) {
+
+        var shareOptions = options || {},
+            a = document.createElement('a'),
+            attr, attrVal, plugin
+
+        // Each anchor needs a unique class for the tests to be atomic
+        // Throw an error if no class attribute was passed
+        if (!attributes['class']) {
+            throw 'Plugin instantiation failed. Check passed `attributes` Object for a `class` property.'
+            return false;
+        }
+
+        // Enable debug mode
+        shareOptions.debug = true;
+
+        // Set the anchor's attributes
+        for (var key in Object.keys(attributes)) {
+            attr = Object.keys(attributes)[key];
+            attrVal = attributes[attr];
+            a.setAttribute(attr, attrVal);
+        }
+
+        // Append the anchor to the qunit-fixture div
+        document.querySelector('#qunit-fixture').appendChild(a);
+
+        // Instantiate and return the plugin object
+        return $(a).storyShare(shareOptions);
+    };
+
+    // Use URL in place of hardcoding a host
+    var url = window.location.href;
+    // Chop off the filename if present
+    // Comenting out pending accepted tests cases
+    // var url = window.location.href,
+    //     end = url.split('/').pop();
+    // if (end.search(/\./) > -1 || end.slice(-1) !== '/') {
+    //     url = url.substring(0, url.length - (end.length));
+    // }
+    </script>
+
+    <script src="/tests/facebook.simple.js"></script>
+    <script src="/tests/facebook.complex.js"></script>
+    <script src="/tests/twitter.js"></script>
+    <script src="/tests/google-plus.js"></script>
+    <script src="/tests/linkedin.js"></script>
+    <script src="/tests/pinterest.js"></script>
+    <script src="/tests/miscellaneous.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery StoryShare Click Tests</title>
+    <style>
+        body {
+            font-family: serif;
+            font-size: large;
+            color: #444444;
+            padding-top: 2em;
+        }
+        h2, ul {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        ul {
+            padding: 0.5em;
+            margin-bottom: 2em;
+            background-color: ghostwhite;
+            list-style-type: none;
+        }
+        li {
+            margin: 1em 0;
+        }
+        a,
+        a:visited {
+            color: blue;
+            text-decoration: none;
+            line-height: 1.2;
+        }
+
+        .facebook,
+        .facebook + ul,
+        .facebook + ul a:visited {
+            color: #3b5998;
+        }
+        .twitter,
+        .twitter + ul,
+        .twitter + ul a:visited {
+            color: #55acee;
+        }
+        .google-plus,
+        .google-plus + ul,
+        .google-plus + ul a:visited {
+            color: #dd4b39;
+        }
+        .linkedin,
+        .linkedin + ul,
+        .linkedin + ul a:visited {
+            color: #0077b5;
+        }
+        .pinterest,
+        .pinterest + ul,
+        .pinterest + ul a:visited {
+            color: #cc2127;
+        }
+
+        a:hover,
+        a:focus {
+            text-decoration: underline;
+        }
+    </style>
+
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/src/jquery.story.share.js"></script>
+</head>
+<body>
+
+<h2 class="facebook">Facebook (simple)</h2>
+
+<ul>
+
+    <li><a href="#" class="share" data-type="facebook-simple" data-url="http://example.com/facebook-simple-share">Share to Facebook (simple)</a></li>
+
+    <li><a href="#" class="share" data-type="facebook-simple" data-url="{{current}}">Share to Facebook (simple) {{current}}</a></li>
+
+</ul>
+
+<h2 class="facebook">Facebook (complex)</h2>
+
+<ul>
+
+    <li><a href="#" class="fb-complex" data-type="facebook-complex" data-link="http://example.com/facebook-complex-share" data-picture="Seattle_from_Kerry_Park.jpg" data-caption="This is just a test" data-description="This was posted via storyShare" data-name="My Facebook Complex Share Test">Share to Facebook (complex)</a></li>
+
+    <li><a href="#" class="fb-complex" data-type="facebook-complex" data-link="{{current}}" data-picture="Seattle_from_Kerry_Park.jpg" data-caption="This is just a test" data-description="This was posted via storyShare {{current}}" data-name="My Facebook Complex Share Test">Share to Facebook (complex) {{current}}</a></li>
+
+    <li><a href="#" class="fb-complex relativeMediaUrlsFalse" data-type="facebook-complex" data-link="http://example.com/facebook-complex-relative-media-urls-false" data-picture="http://localhost:8000/tests/assets/Seattle_from_Kerry_Park.jpg" data-caption="This is just a test" data-description="This was posted via storyShare" data-name="My Facebook Complex Share Test">Share to Facebook (complex) ({relativeMediaUrls:false})</a></li>
+
+</ul>
+
+<h2 class="twitter">Twitter</h2>
+
+<ul>
+
+    <li><a href="#" class="share" data-type="twitter" data-url="http://example.com/twitter-share" data-text="This is a tweet from storyShare" data-hashtags="jQuery, Story, awesomeSauce" data-via="icbinb">Share to Twitter</a></li>
+
+    <li><a href="#" class="share" data-type="twitter" data-url="{{current}}" data-text="This is a tweet from storyShare {{current}}" data-hashtags="jQuery, Story, awesomeSauce" data-via="icbinb">Share to Twitter {{current}}</a></li>
+
+</ul>
+
+<h2 class="google-plus">Google Plus</h2>
+
+<ul>
+
+    <li><a href="#" class="share" data-type="google-plus" data-url="http://example.com/google-plus-share">Share to Google Plus</a></li>
+
+    <li><a href="#" class="share" data-type="google-plus" data-url="{{current}}">Share to Google Plus {{current}}</a></li>
+
+</ul>
+
+<h2 class="linkedin">LinkedIn</h2>
+
+<ul>
+
+    <li><a href="#" class="share" data-type="linkedin" data-title="My LinkedIn Share Test" data-url="http://example.com/linkedin-share" data-source="LinkedIn Lovers Blog" data-summary="Shared to LinkedIn via storyShare">Share to LinkedIn</a></li>
+
+    <li><a href="#" class="share" data-type="linkedin" data-title="My LinkedIn Share Test" data-url="{{current}}" data-source="LinkedIn Lovers Blog" data-summary="Shared to LinkedIn via storyShare {{current}}">Share to LinkedIn {{current}}</a></li>
+
+</ul>
+
+<h2 class="pinterest">Pinterest</h2>
+
+<ul>
+
+    <li><a href="#" class="share" data-type="pinterest" data-url="http://example.com/pinterest-share" data-media="assets/Seattle_from_Kerry_Park.jpg" data-description="Pinned via storyShare">Share to Pinterest</a></li>
+
+    <li><a href="#" class="share" data-type="pinterest" data-url="{{current}}" data-media="assets/Seattle_from_Kerry_Park.jpg" data-description="Pinned via storyShare {{current}}">Share to Pinterest {{current}}</a></li>
+
+    <li><a href="#" class="pin relativeMediaUrlsFalse" data-type="pinterest" data-url="http://example.com/pinterest-relative-media-urls-false" data-media="http://localhost:8000/tests/assets/Seattle_from_Kerry_Park.jpg" data-description="Pinned via storyShare">Share to Pinterest ({relativeMediaUrls:false})</a></li>
+
+</ul>
+
+<h2>Miscellaneous Tests</h2>
+
+<ul>
+
+    <li><a href="#" class="windowSize" data-type="facebook-simple" data-url="http://example.com/window-test">Window size 400x600</a></li>
+
+</ul>
+
+<script>
+jQuery(document).ready(function(){
+    // Standard shares (with no need to pass options)
+    $('.share').storyShare();
+
+    // Facebook (complex)
+    $('.fb-complex').storyShare({
+        fbAppId: '815164228572148'
+    });
+
+    // Facebook (complex) {relativeMediaUrls: false}
+    $('.fb-complex.relativeMediaUrlsFalse').storyShare({
+        fbAppId: '815164228572148',
+        relativeMediaUrls:false
+    });
+
+    // Pinterest {relativeMediaUrls: false}
+    $('.pin.relativeMediaUrlsFalse').storyShare({
+        relativeMediaUrls:false
+    });
+
+    // Miscellaneous
+    $('.windowSize').storyShare({
+        windowWidth: 400,
+        windowHeight:600
+    });
+});
+</script>
+
+</body>
+</html>
